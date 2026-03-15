@@ -162,14 +162,10 @@ export type EndpointTestResponse = {
   failed: number
 }
 
-// Base URL for API: in dev use '' so requests go to same origin and Vite proxy forwards /api to http://localhost:3001.
-// In prod use VITE_API_URL or fallback to http://localhost:3001. All paths are relative (e.g. /api/report).
-const API_URL = import.meta.dev
-  ? ''
-  : (typeof import.meta.env.VITE_API_URL === 'string' && import.meta.env.VITE_API_URL.trim()) || 'http://localhost:3001'
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 async function apiRequest<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`${API_URL}${path}`, {
+  const response = await fetch(`${API_BASE}${path}`, {
     headers: {
       'Content-Type': 'application/json',
       ...(init?.headers ?? {}),
