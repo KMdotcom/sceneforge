@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "node dist/server/index.js",
+    "start": "ts-node --skipProject --compiler-options {\"module\":\"commonjs\"} server/index.ts",
     "dev:client": "vite",
     "dev:server": "ts-node server/index.ts",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
