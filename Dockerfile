@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 3001
 
-CMD ["npx", "ts-node", "server/index.ts"]
+CMD ["node", "--loader", "ts-node/esm", "server/index.ts"]

@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "node --loader ts-node/esm server/index.ts",
     "dev:client": "vite",
     "dev:server": "ts-node server/index.ts",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
