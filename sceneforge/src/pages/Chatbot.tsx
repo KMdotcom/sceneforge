@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import {
+  API_BASE,
   applyChaos,
   deleteSandboxRecord,
   generateFromTemplate,
@@ -1572,7 +1573,7 @@ const Chatbot: React.FC = () => {
                         <button
                           type="button"
                           className="endpoint-btn demo-endpoint"
-                          onClick={() => setEndpointTargetUrl('http://localhost:3001/api/mock-endpoint')}
+                          onClick={() => setEndpointTargetUrl(`${API_BASE}/api/mock-endpoint`)}
                           disabled={isRunningEndpointTest}
                           title="Use the built-in demo endpoint for realistic mixed results (200s, 400s, 402s, 403s, 500s)"
                         >
