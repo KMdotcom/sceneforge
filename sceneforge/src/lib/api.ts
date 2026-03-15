@@ -1,3 +1,5 @@
+const API_BASE = (import.meta.env.VITE_API_URL as string) || 'http://localhost:3001'
+
 export type UserRecord = {
   id: string
   name: string
@@ -162,7 +164,7 @@ export type EndpointTestResponse = {
   failed: number
 }
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+export { API_BASE }
 
 async function apiRequest<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`, {
@@ -278,7 +280,7 @@ export function getMemoryStatus() {
 }
 
 export function getSandbox(sandboxId: string) {
-  return fetch(`${API_URL}/api/sandbox/${sandboxId}`)
+  return fetch(`${API_BASE}/api/sandbox/${sandboxId}`)
     .then(async (response) => {
       const payload = (await response.json().catch(() => ({ error: 'Invalid server response.' }))) as
         | {
