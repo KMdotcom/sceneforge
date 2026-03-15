@@ -184,16 +184,11 @@ function getRelatedUserIdsFromEntity(entity: PrimaryEntityRecord): string[] {
     .map(([, value]) => value as string)
 }
 
-function getPermissionTier(role: string): PermissionTier {
+const getPermissionTier = (role: string | undefined | null): PermissionTier => {
+  if (!role) return 'standard'
   const r = role.toLowerCase()
   if (r.includes('admin') || r.includes('manager') || r.includes('owner')) return 'admin'
-  if (
-    r.includes('viewer') ||
-    r.includes('read') ||
-    r.includes('guest') ||
-    r.includes('patient') ||
-    r.includes('shopper')
-  ) return 'restricted'
+  if (r.includes('viewer') || r.includes('read') || r.includes('guest') || r.includes('patient') || r.includes('shopper')) return 'restricted'
   return 'standard'
 }
 
@@ -617,7 +612,11 @@ const Chatbot: React.FC = () => {
     }
   }, [sandbox])
   const metrics = sandboxData?.dashboard_metrics
-  const viewingUsers = useMemo(() => sandboxData?.users ?? [], [sandboxData])
+  // Before mapping users to dropdown options, filter out any without valid id/role:
+  const viewingUsers = useMemo(
+    () => sandboxData?.users?.filter((u) => u && u.id) ?? [],
+    [sandboxData?.users],
+  )
   const selectedViewingUser = useMemo(
     () => viewingUsers.find((user) => user.id === selectedViewingUserId) ?? null,
     [selectedViewingUserId, viewingUsers],
